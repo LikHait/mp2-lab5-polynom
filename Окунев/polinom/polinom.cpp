@@ -169,53 +169,6 @@ string TPolinom::ToString()
     return str;
 }
 
-string TPolinom::MonomToString(TMonom monom)
-{
-    if (monom.coef == 0)
-        return "";
-    string str;
-    if (monom.coef < 0)
-    {
-        str += "-";
-    }
-    else
-    {
-        str += "+";
-    }
-    str += to_string(monom.coef);
-    if (monom.degree / (p * p) != 0)
-    {
-        str += "x^";
-        str += to_string(monom.degree / (p * p));
-    }
-    if ((monom.degree % (p * p)) / p != 0)
-    {
-        str += "y^";
-        str += to_string((monom.degree % (p * p)) / p);
-    }
-    if ((monom.degree % (p * p)) % p != 0)
-    {
-        str += "z^";
-        str += to_string((monom.degree % (p * p)) % p);
-    }
-    return str;
-}
-
-string TPolinom::ToString()
-{
-    if (pFirst == pFirst->pNext)
-        return "0";
-    TLink* tmp = pFirst->pNext;
-    string str;
-    while (tmp != pFirst)
-    {
-        str += MonomToString(tmp->monom);
-        tmp = tmp->pNext;
-    }
-    str.erase(0, 1);
-    return str;
-}
-
 TPolinom:: TPolinom(char* str)
 {
 	CreateHead();
