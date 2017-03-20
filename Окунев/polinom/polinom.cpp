@@ -179,7 +179,7 @@ TPolinom TPolinom::operator+(const TPolinom &p)
 {
     TLink* p1 = this->pFirst->pNext;
     TLink* p2 = p.pFirst->pNext;
-    TPolinom polin;
+	TPolinom polin;
     while (p1 != this->pFirst || p2 != p.pFirst)
     {
         if (p1->monom.degree > p2->monom.degree)
@@ -202,7 +202,7 @@ TPolinom TPolinom::operator+(const TPolinom &p)
             p2 = p2->pNext;
         }
     }
-    polin.RemoveZeroComponents();
+	polin.RemoveZeroComponents();
     return polin;
 }
 
@@ -239,16 +239,32 @@ TPolinom TPolinom::operator-(const TPolinom &p)
     return polin;
 }
 
-//TPolinom TPolinom::operator*(double c)
-//{
-//    TLink* p1 = this->pFirst->pNext;
-//    TPolinom polin;
-//    while (p1 != this->pFirst || p2 != p.pFirst)
-//    {
-//    }
-//    polin.RemoveZeroComponents();
-//    return polin;
-//}
+TPolinom TPolinom::operator*(double c)
+{
+    TLink* p1 = this->pFirst->pNext;
+    TPolinom polin;
+	TMonom monom;
+    while (p1 != this->pFirst)
+	{
+		monom = p1->monom;
+		monom.coef *= c;
+		polin.AddMonom(monom);
+		p1 = p1->pNext;
+    }
+    polin.RemoveZeroComponents();
+    return polin;
+}
+
+TPolinom::TPolinom(const TPolinom &p)
+{
+	CreateHead();
+	TLink* p1 = p.pFirst->pNext;
+	while (p1 != p.pFirst)
+	{
+		AddMonom(p1->monom);
+		p1 = p1->pNext;
+	}
+}
 
 TPolinom:: TPolinom(char* str)
 {
