@@ -32,7 +32,7 @@ public:
 //методы
 	TPolinom operator+(const TPolinom &p);
 	TPolinom operator-(const TPolinom &p);
-	TPolinom operator*(float c);
+	TPolinom operator*(double c);
 	string ToString();
 };
 

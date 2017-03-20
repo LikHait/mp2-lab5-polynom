@@ -60,13 +60,22 @@ void TPolinom::CreatePolinom(string str)
 		{
 			if (i == 0 || str[i-1] == '+' || str[i-1] == '-')
 			{
+                if (i != 0 && str[i - 1] == '-')
+                {
+                    st += '-';
+                }
                 while (str[i] != 'x' && str[i] != 'y' && str[i] != 'z' && str[i] != '+' && str[i] != '-' && i < str.length())
 				{
 					st += str[i];
 					i++;
 				}
-				monom.coef = stod(st);
-                st.clear();
+                if (st != "")
+                {
+                    monom.coef = stod(st);
+                    st.clear();
+                }
+                else
+                    monom.coef = 1;
 			}
 			if (str[i] == 'x')
 			{
@@ -127,11 +136,7 @@ string TPolinom::MonomToString(TMonom monom)
     if (monom.coef == 0)
         return "";
     string str;
-    if (monom.coef < 0)
-    {
-        str += "-";
-    }
-    else
+    if (monom.coef > 0)
     {
         str += "+";
     }
@@ -165,8 +170,84 @@ string TPolinom::ToString()
         str += MonomToString(tmp->monom);
         tmp = tmp->pNext;
     }
-    str.erase(0, 1);
+    if (str[0] == '+')
+        str.erase(0, 1);
     return str;
+}
+
+TPolinom TPolinom::operator+(const TPolinom &p)
+{
+    TLink* p1 = this->pFirst->pNext;
+    TLink* p2 = p.pFirst->pNext;
+    TPolinom polin;
+    while (p1 != this->pFirst || p2 != p.pFirst)
+    {
+        if (p1->monom.degree > p2->monom.degree)
+        {
+            polin.AddMonom(p1->monom);
+            p1 = p1->pNext;
+        }
+        if (p1->monom.degree < p2->monom.degree)
+        {
+            polin.AddMonom(p2->monom);
+            p2 = p2->pNext;
+        }
+        if ((p1->monom.degree == p2->monom.degree) && p1 != this->pFirst)
+        {
+            TMonom tmpMon;
+            tmpMon.coef = p1->monom.coef + p2->monom.coef;
+            tmpMon.degree = p1->monom.degree;
+            polin.AddMonom(tmpMon);
+            p1 = p1->pNext;
+            p2 = p2->pNext;
+        }
+    }
+    polin.RemoveZeroComponents();
+    return polin;
+}
+
+TPolinom TPolinom::operator-(const TPolinom &p)
+{
+    TLink* p1 = this->pFirst->pNext;
+    TLink* p2 = p.pFirst->pNext;
+    TPolinom polin;
+    while (p1 != this->pFirst || p2 != p.pFirst)
+    {
+        if (p1->monom.degree > p2->monom.degree)
+        {
+            polin.AddMonom(p1->monom);
+            p1 = p1->pNext;
+        }
+        if (p1->monom.degree < p2->monom.degree)
+        {
+            TMonom tmpMon = p2->monom;
+            tmpMon.coef *=-1;
+            polin.AddMonom(p2->monom);
+            p2 = p2->pNext;
+        }
+        if ((p1->monom.degree == p2->monom.degree) && p1 != this->pFirst)
+        {
+            TMonom tmpMon;
+            tmpMon.coef = p1->monom.coef - p2->monom.coef;
+            tmpMon.degree = p1->monom.degree;
+            polin.AddMonom(tmpMon);
+            p1 = p1->pNext;
+            p2 = p2->pNext;
+        }
+    }
+    polin.RemoveZeroComponents();
+    return polin;
+}
+
+TPolinom TPolinom::operator*(double c);
+{
+    TLink* p1 = this->pFirst->pNext;
+    TPolinom polin;
+    while (p1 != this->pFirst || p2 != p.pFirst)
+    {
+    }
+    polin.RemoveZeroComponents();
+    return polin;
 }
 
 TPolinom:: TPolinom(char* str)
