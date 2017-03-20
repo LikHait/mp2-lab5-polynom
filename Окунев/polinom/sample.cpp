@@ -5,9 +5,11 @@ using namespace std;
 
 int main()
 {
-	string std;
-	cin >> std;
-	TPolinom polinom(std);
-	cout << polinom.ToString();
+    string std;
+    cin >> std;
+    TPolinom polinom(std);
+    cout << polinom.ToString();
+    getchar();
+    getchar();
 	return 0;
 }

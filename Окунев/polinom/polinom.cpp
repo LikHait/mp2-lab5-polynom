@@ -239,16 +239,16 @@ TPolinom TPolinom::operator-(const TPolinom &p)
     return polin;
 }
 
-TPolinom TPolinom::operator*(double c);
-{
-    TLink* p1 = this->pFirst->pNext;
-    TPolinom polin;
-    while (p1 != this->pFirst || p2 != p.pFirst)
-    {
-    }
-    polin.RemoveZeroComponents();
-    return polin;
-}
+//TPolinom TPolinom::operator*(double c)
+//{
+//    TLink* p1 = this->pFirst->pNext;
+//    TPolinom polin;
+//    while (p1 != this->pFirst || p2 != p.pFirst)
+//    {
+//    }
+//    polin.RemoveZeroComponents();
+//    return polin;
+//}
 
 TPolinom:: TPolinom(char* str)
 {
