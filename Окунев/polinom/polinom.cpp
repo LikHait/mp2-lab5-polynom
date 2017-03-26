@@ -222,7 +222,7 @@ TPolinom TPolinom::operator-(const TPolinom &p)
         {
             TMonom tmpMon = p2->monom;
             tmpMon.coef *=-1;
-            polin.AddMonom(p2->monom);
+            polin.AddMonom(tmpMon);
             p2 = p2->pNext;
         }
         if ((p1->monom.degree == p2->monom.degree) && p1 != this->pFirst)
@@ -253,6 +253,19 @@ TPolinom TPolinom::operator*(double c)
     }
     polin.RemoveZeroComponents();
     return polin;
+}
+
+TPolinom TPolinom::operator=(const TPolinom &p)
+{
+    this->~TPolinom();
+    this->CreateHead();
+    TLink* p1 = p.pFirst->pNext;
+    while (p1 != p.pFirst)
+    {
+        this->AddMonom(p1->monom);
+        p1 = p1->pNext;
+    }
+    return *this;
 }
 
 TPolinom::TPolinom(const TPolinom &p)

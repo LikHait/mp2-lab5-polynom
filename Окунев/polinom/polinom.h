@@ -35,5 +35,6 @@ public:
 	TPolinom operator+(const TPolinom &p);
 	TPolinom operator-(const TPolinom &p);
 	TPolinom operator*(double c);
+    TPolinom operator=(const TPolinom &p);
 	string ToString();
 };
