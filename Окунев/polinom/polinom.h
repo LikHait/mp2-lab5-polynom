@@ -32,6 +32,8 @@ public:
 	~TPolinom();
 //методы
 	void static setP(int P) { p = P; }
+    double Calculate(double x, double y, double z);
+    double CalculateMonom(TMonom monom, double x, double y, double z);
 	TPolinom operator+(const TPolinom &p);
 	TPolinom operator-(const TPolinom &p);
 	TPolinom operator*(double c);

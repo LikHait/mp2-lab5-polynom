@@ -1,5 +1,42 @@
 ﻿#include "polinom.h"
 
+double TPolinom::CalculateMonom(TMonom monom, double x, double y, double z)
+{
+    if (pFirst == pFirst->pNext)
+        return 0;
+    double calc = 1 * monom.coef;
+    int degr = monom.degree / (p * p);
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= x;
+    }
+    degr = (monom.degree % (p * p)) / p;
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= y;
+    }
+    degr = (monom.degree % (p * p)) % p;
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= z;
+    }
+    return calc;
+}
+
+double TPolinom::Calculate(double x, double y, double z)
+{
+    if (pFirst == pFirst->pNext)
+        return 0;
+    TLink* tmp = pFirst->pNext;
+    double calc = 0;
+    while (tmp != pFirst)
+    {
+        calc += CalculateMonom(tmp->monom, x, y, z);
+        tmp = tmp->pNext;
+    }
+    return calc;
+}
+
 void TPolinom::AddMonom(TMonom monom)
 {
     TLink* link = new TLink;

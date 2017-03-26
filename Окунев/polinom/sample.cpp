@@ -21,6 +21,7 @@ int main()
 	TPolinom polinom2(std);
 	cout << polinom.ToString() << endl;
 	cout << polinom2.ToString() << endl;
+    //пример арифметических операций
 	TPolinom polinom3;
     cout << "p1 + p2 " << endl;
 	polinom3 = polinom + polinom2;
@@ -28,5 +29,14 @@ int main()
     cout << "p1 - p2" << endl;
     polinom3 = polinom - polinom2;
     cout << polinom3.ToString() << endl;
+    //пример подсчета полинома с указанными значениями
+    double val[3];
+    cout << "Введите значения x, y, z" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        cin >> val[i];
+    }
+    cout << "Результат :";
+    cout << polinom.Calculate(val[0], val[1], val[2]) << endl;
 	return 0;
 }
