@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "polinom.h"
 
 using namespace std;
@@ -9,19 +9,19 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	int p;
-    cout << "Ââåäèòå ìàêñèìàëüíóþ ñòåïåíü ïîëèíîìà\n";
+    cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½ÑƒÑŽ ÑÑ‚ÐµÐ¿ÐµÐ½ÑŒ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð°\n";
 	cin >> p;
 	TPolinom::setP(p);
     string std;
-	cout << "Ââåäèòå ïîëèíîì p1\n";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼ p1\n";
     cin >> std;
     TPolinom polinom(std);
-	cout << "Ââåäèòå ïîëèíîì p2\n";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼ p2\n";
 	cin >> std;
 	TPolinom polinom2(std);
 	cout << polinom.ToString() << endl;
 	cout << polinom2.ToString() << endl;
-    //ïðèìåð àðèôìåòè÷åñêèõ îïåðàöèé
+    //Ð¿Ñ€Ð¸Ð¼ÐµÑ€ Ð°Ñ€Ð¸Ñ„Ð¼ÐµÑ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ñ… Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¹
 	TPolinom polinom3;
     cout << "p1 + p2 " << endl;
 	polinom3 = polinom + polinom2;
@@ -29,14 +29,14 @@ int main()
     cout << "p1 - p2" << endl;
     polinom3 = polinom - polinom2;
     cout << polinom3.ToString() << endl;
-    //ïðèìåð ïîäñ÷åòà ïîëèíîìà ñ óêàçàííûìè çíà÷åíèÿìè
+    //Ð¿Ñ€Ð¸Ð¼ÐµÑ€ Ð¿Ð¾Ð´ÑÑ‡ÐµÑ‚Ð° Ð¿Ð¾Ð»Ð¸Ð½Ð¾Ð¼Ð° Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ð¼Ð¸ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸ÑÐ¼Ð¸
     double val[3];
-    cout << "Ââåäèòå çíà÷åíèÿ x, y, z" << endl;
+    cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ x, y, z" << endl;
     for (int i = 0; i < 3; i++)
     {
         cin >> val[i];
     }
-    cout << "Ðåçóëüòàò :";
+    cout << "Ð ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ :";
     cout << polinom.Calculate(val[0], val[1], val[2]) << endl;
 	return 0;
 }
