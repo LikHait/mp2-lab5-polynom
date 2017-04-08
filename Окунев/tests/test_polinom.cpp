@@ -99,12 +99,12 @@ TEST(TPolinom, can_multiply_polinom_by_negative_number)
 
 TEST(TPolinom, can_be_calculated_with_given_values)
 {
-    string str = "16.000000x^7y^4+19.000000z^3";
-    double x = 7;
+	string str = "16x^7y^4+19z^3";
+	double x = 7;
     double y = 1.2;
     double z = 3;
     TPolinom polin(str);
-    double Res = 27323700;
-    std::cout << "!!!" << polin.Calculate(x, y, z) << endl;
-    EXPECT_EQ(Res, polin.Calculate(x, y, z));
+    double Res = 16 * pow(x, 7) * pow(y, 4) + 19 * pow(z, 3);
+	double calcRes = polin.Calculate(x, y, z);
+    EXPECT_EQ(abs(Res - calcRes) < 0.001, 1);
 }

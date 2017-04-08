@@ -177,7 +177,7 @@ string TPolinom::MonomToString(TMonom monom)
     {
         str += "+";
     }
-    str += to_string(monom.coef);
+    str += to_string((double)monom.coef);
     if (monom.degree / (p * p) != 0)
     {
         str += "x^";
@@ -209,6 +209,8 @@ string TPolinom::ToString()
     }
     if (str[0] == '+')
         str.erase(0, 1);
+	if (str == "")
+		return "0";
     return str;
 }
 
