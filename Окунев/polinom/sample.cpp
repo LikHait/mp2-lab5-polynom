@@ -9,7 +9,7 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	int p;
-	cout << "¬ведите коэффициент р \n";
+    cout << "¬ведите максимальную степень полинома\n";
 	cin >> p;
 	TPolinom::setP(p);
     string std;

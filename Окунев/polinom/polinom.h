@@ -31,7 +31,15 @@ public:
 	TPolinom();
 	~TPolinom();
 //методы
-	void static setP(int P) { p = P; }
+    void static setP(int P) {
+        int i = 0;
+        while ( P != 0)
+        {
+            P /= 10;
+            i++;
+        }
+        p = pow(10, i);
+    }
     double Calculate(double x, double y, double z);
     double CalculateMonom(TMonom monom, double x, double y, double z);
 	TPolinom operator+(const TPolinom &p);
