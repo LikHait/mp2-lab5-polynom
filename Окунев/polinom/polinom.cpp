@@ -41,13 +41,16 @@ void TPolinom::AddMonom(TMonom monom)
 {
     TLink* link = new TLink;
     link->monom = monom;
-    if (pFirst == pFirst->pNext)
+    TLink* tmp = pFirst->pNext;
+    while (tmp != pFirst)
     {
-        link->pNext = pFirst;
-        pFirst->pNext = link;
-        return;
+        if (tmp->monom.degree == monom.degree)
+        {
+            tmp->monom.coef += monom.coef;
+            return;
+        }
+        tmp = tmp->pNext;
     }
-    TLink* tmp = pFirst;
     while (tmp->pNext->monom.degree > monom.degree)
     {
         tmp = tmp->pNext;
