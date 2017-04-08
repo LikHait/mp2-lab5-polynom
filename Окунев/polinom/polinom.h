@@ -1,4 +1,5 @@
 ﻿#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -38,7 +39,8 @@ public:
             P /= 10;
             i++;
         }
-        p = pow(10, i);
+        p = (int)pow(10, i);
+        cout << p;
     }
     double Calculate(double x, double y, double z);
     double CalculateMonom(TMonom monom, double x, double y, double z);

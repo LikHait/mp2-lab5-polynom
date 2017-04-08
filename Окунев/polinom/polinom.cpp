@@ -47,7 +47,7 @@ void TPolinom::AddMonom(TMonom monom)
         pFirst->pNext = link;
         return;
     }
-    TLink* tmp = pFirst ->pNext;
+    TLink* tmp = pFirst;
     while (tmp->pNext->monom.degree > monom.degree)
     {
         tmp = tmp->pNext;
@@ -88,7 +88,7 @@ void TPolinom::CreatePolinom(string str)
 	int i = 0;
 	TMonom monom;
 	string st;
-	for (int i = 0; i < str.length(); i++)
+	for (unsigned int i = 0; i < str.length(); i++)
 	{
         st.clear();
 		monom.coef = 0;
@@ -125,6 +125,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += p*p*stoi(st);
                     st.clear();
                 }
@@ -141,6 +143,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += p*stoi(st);
                     st.clear();
                 }
@@ -157,6 +161,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += stoi(st);
                     st.clear();
                 }
