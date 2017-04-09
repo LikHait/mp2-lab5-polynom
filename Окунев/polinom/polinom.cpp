@@ -291,6 +291,8 @@ TPolinom TPolinom::operator*(double c)
 {
     TLink* p1 = this->pFirst->pNext;
     TPolinom polin;
+    if (c == 0)
+        return polin;
 	TMonom monom;
     while (p1 != this->pFirst)
 	{
@@ -299,7 +301,6 @@ TPolinom TPolinom::operator*(double c)
 		polin.AddMonom(monom);
 		p1 = p1->pNext;
     }
-    polin.RemoveZeroComponents();
     return polin;
 }
 
