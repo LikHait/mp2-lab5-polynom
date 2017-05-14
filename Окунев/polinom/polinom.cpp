@@ -1,16 +1,56 @@
 ﻿#include "polinom.h"
 
+double TPolinom::CalculateMonom(TMonom monom, double x, double y, double z)
+{
+    if (pFirst == pFirst->pNext)
+        return 0;
+    double calc = 1 * monom.coef;
+    int degr = monom.degree / (p * p);
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= x;
+    }
+    degr = (monom.degree % (p * p)) / p;
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= y;
+    }
+    degr = (monom.degree % (p * p)) % p;
+    for (int i = 0; i < degr; i++)
+    {
+        calc *= z;
+    }
+    return calc;
+}
+
+double TPolinom::Calculate(double x, double y, double z)
+{
+    if (pFirst == pFirst->pNext)
+        return 0;
+    TLink* tmp = pFirst->pNext;
+    double calc = 0;
+    while (tmp != pFirst)
+    {
+        calc += CalculateMonom(tmp->monom, x, y, z);
+        tmp = tmp->pNext;
+    }
+    return calc;
+}
+
 void TPolinom::AddMonom(TMonom monom)
 {
     TLink* link = new TLink;
     link->monom = monom;
-    if (pFirst == pFirst->pNext)
+    TLink* tmp = pFirst->pNext;
+    while (tmp != pFirst)
     {
-        link->pNext = pFirst;
-        pFirst->pNext = link;
-        return;
+        if (tmp->monom.degree == monom.degree)
+        {
+            tmp->monom.coef += monom.coef;
+            return;
+        }
+        tmp = tmp->pNext;
     }
-    TLink* tmp = pFirst ->pNext;
     while (tmp->pNext->monom.degree > monom.degree)
     {
         tmp = tmp->pNext;
@@ -51,7 +91,7 @@ void TPolinom::CreatePolinom(string str)
 	int i = 0;
 	TMonom monom;
 	string st;
-	for (int i = 0; i < str.length(); i++)
+	for (unsigned int i = 0; i < str.length(); i++)
 	{
         st.clear();
 		monom.coef = 0;
@@ -88,6 +128,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += p*p*stoi(st);
                     st.clear();
                 }
@@ -104,6 +146,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += p*stoi(st);
                     st.clear();
                 }
@@ -120,6 +164,8 @@ void TPolinom::CreatePolinom(string str)
 				}
                 if (st != "")
                 {
+                    if (stoi(st) > p)
+                        throw ("The degree of the polynomial exceeds the maximum permissible");
                     monom.degree += stoi(st);
                     st.clear();
                 }
@@ -140,7 +186,7 @@ string TPolinom::MonomToString(TMonom monom)
     {
         str += "+";
     }
-    str += to_string(monom.coef);
+    str += to_string((double)monom.coef);
     if (monom.degree / (p * p) != 0)
     {
         str += "x^";
@@ -172,6 +218,8 @@ string TPolinom::ToString()
     }
     if (str[0] == '+')
         str.erase(0, 1);
+	if (str == "")
+		return "0";
     return str;
 }
 
@@ -179,7 +227,7 @@ TPolinom TPolinom::operator+(const TPolinom &p)
 {
     TLink* p1 = this->pFirst->pNext;
     TLink* p2 = p.pFirst->pNext;
-    TPolinom polin;
+	TPolinom polin;
     while (p1 != this->pFirst || p2 != p.pFirst)
     {
         if (p1->monom.degree > p2->monom.degree)
@@ -202,7 +250,7 @@ TPolinom TPolinom::operator+(const TPolinom &p)
             p2 = p2->pNext;
         }
     }
-    polin.RemoveZeroComponents();
+	polin.RemoveZeroComponents();
     return polin;
 }
 
@@ -222,7 +270,7 @@ TPolinom TPolinom::operator-(const TPolinom &p)
         {
             TMonom tmpMon = p2->monom;
             tmpMon.coef *=-1;
-            polin.AddMonom(p2->monom);
+            polin.AddMonom(tmpMon);
             p2 = p2->pNext;
         }
         if ((p1->monom.degree == p2->monom.degree) && p1 != this->pFirst)
@@ -239,15 +287,45 @@ TPolinom TPolinom::operator-(const TPolinom &p)
     return polin;
 }
 
-TPolinom TPolinom::operator*(double c);
+TPolinom TPolinom::operator*(double c)
 {
     TLink* p1 = this->pFirst->pNext;
     TPolinom polin;
-    while (p1 != this->pFirst || p2 != p.pFirst)
-    {
+    if (c == 0)
+        return polin;
+	TMonom monom;
+    while (p1 != this->pFirst)
+	{
+		monom = p1->monom;
+		monom.coef *= c;
+		polin.AddMonom(monom);
+		p1 = p1->pNext;
     }
-    polin.RemoveZeroComponents();
     return polin;
+}
+
+TPolinom TPolinom::operator=(const TPolinom &p)
+{
+    this->~TPolinom();
+    this->CreateHead();
+    TLink* p1 = p.pFirst->pNext;
+    while (p1 != p.pFirst)
+    {
+        this->AddMonom(p1->monom);
+        p1 = p1->pNext;
+    }
+    return *this;
+}
+
+TPolinom::TPolinom(const TPolinom &p)
+{
+	CreateHead();
+	TLink* p1 = p.pFirst->pNext;
+	while (p1 != p.pFirst)
+	{
+		AddMonom(p1->monom);
+		p1 = p1->pNext;
+	}
 }
 
 TPolinom:: TPolinom(char* str)
